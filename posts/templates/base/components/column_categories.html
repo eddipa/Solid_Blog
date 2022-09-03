@@ -1,0 +1,8 @@
+Top Categories:<br>
+<ul>
+    {% for category in categories %}
+      <li>
+        <a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a>
+      </li>
+    {% endfor %}
+</ul>

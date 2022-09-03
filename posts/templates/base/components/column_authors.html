@@ -1,0 +1,8 @@
+Top Authors:<br>
+<ul>
+    {% for author in authors %}
+      <li>
+        <a href="{% url 'author_detail' author.slug %}">{{ author.slug }}</a>
+      </li>
+    {% endfor %}
+</ul>

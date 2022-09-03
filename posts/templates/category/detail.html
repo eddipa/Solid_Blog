@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    name : {{ category.name }}
+    {% if user.is_authenticated %}
+      &spar;<a href="{% url 'category_update' category.slug %}">Update</a>
+      &spar;<a href="{% url 'category_delete' category.slug %}">Delete</a>
+    {% endif %}
+    <br>
+    <ul>
+        {% for post in category.post_set.all %}
+          <li>
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

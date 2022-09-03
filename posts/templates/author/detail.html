@@ -1,0 +1,11 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    author : {{ author.slug }}<br>
+    <ul>
+        {% for post in author.post_set.all %}
+          <li>
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

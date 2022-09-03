@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    name : {{ tag.name }}
+    {% if user.is_authenticated %}
+      &spar;<a href="{% url 'tag_update' tag.slug %}">Update</a>
+      &spar;<a href="{% url 'tag_delete' tag.slug %}">Delete</a>
+    {% endif %}
+    <br>
+    <ul>
+        {% for post in tag.post_set.all %}
+          <li>
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

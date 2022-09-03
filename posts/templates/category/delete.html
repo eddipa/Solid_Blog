@@ -1,0 +1,8 @@
+{% extends 'base/base.html'%}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete Category "{{ category.name }}"?</p>
+    <input type="submit" name="submit" class="btn btn-dark btn-md" value="Delete">
+</form>
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'base/base.html'%}
+{% block content %}
+<h1>{{ category.name }}</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <br>
+    <input type="checkbox" name="change_slug"> change slug
+    <br>
+    <input type="submit" name="submit" class="btn btn-dark btn-md" value="save">
+</form>
+{% endblock content %}
