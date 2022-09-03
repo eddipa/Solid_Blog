@@ -1,11 +1,15 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group
 from django.template.defaultfilters import slugify
 from django.db import models
 
-from django.contrib import admin
 
-
-from django.utils.html import format_html
+# TODO: post save signal to set user as staff when a group is assigned
+def make_user_staff(self):
+    groups = self.groups.all()
+    manager_group = Group.objects.filter(name='Manager').first()
+    writer_group = Group.objects.filter(name='Writer').first()
+    if manager_group in groups or writer_group in groups:
+        self.is_staff = True
 
 
 class CustomUser(AbstractUser):
@@ -30,4 +34,5 @@ class CustomUser(AbstractUser):
         if not self.slug:
             self.slug = slugify(self.username)
         return super().save(*args, **kwargs)
+
 
