@@ -8,6 +8,9 @@ from accounts.models import CustomUser as Author
 class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(null=False, unique=True)
+    
+    class Meta:
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
@@ -50,7 +53,7 @@ class Post(models.Model):
     categories = models.ManyToManyField(Category, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
     content = models.TextField()
-    image = models.FileField(upload_to='images/', null=True)
+    image = models.FileField(upload_to='images/', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     counter = models.IntegerField(default=0)
@@ -62,8 +65,11 @@ class Post(models.Model):
         return reverse('post_detail', args=[str(self.slug)])
 
     def save(self, *args, **kwargs):
+        # slug
         if not self.slug:
             self.slug = slugify(self.title)
+        # user
+        # image
         if self.image:
             this = Post.objects.get(id=self.id)
             if this.image != self.image:
