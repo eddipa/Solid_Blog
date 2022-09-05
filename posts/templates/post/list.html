@@ -34,12 +34,8 @@
 {% endif %}
 
 
-<hr>
-{% include 'base/components/column_months.html' with months=pub_months %}
-{% include 'base/components/column_top_posts.html' with posts=top_posts %}
-{% include 'base/components/column_authors.html' with authors=top_authors %}
-{% include 'base/components/column_categories.html' with categories=top_categories %}
-{% include 'base/components/column_tags.html' with tags=top_tags %}
 
+<hr>
+{{ column|safe }}
 
 {% endblock content %}

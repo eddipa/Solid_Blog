@@ -1,6 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.shortcuts import HttpResponse, render
+from django.template import loader
 
 from django.urls import reverse_lazy
 from django.http import Http404
@@ -17,6 +19,59 @@ from .forms import PostForm
 
 # TODO: separate of menu and columns loader from main views
 
+def render_menu_item(request, template, context):
+    t = loader.get_template(template)
+    return t.render(context, request)
+
+
+def render_menu_authors(request, template='base/components/column_authors.html', num=5):
+    context = {}
+    top_authors = Author.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
+    context["authors"] = top_authors[:num]
+    return render_menu_item(request, template, context)
+
+
+def render_menu_tags(request, template='base/components/column_tags.html', num=5):
+    context = {}
+    top_tags = Tag.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
+    context['tags'] = top_tags[:num]
+    return render_menu_item(request, template, context)
+
+
+def render_menu_categories(request, template='base/components/column_categories.html', num=5):
+    context = {}
+    top_categories = Category.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
+    context['categories'] = top_categories[:num]
+    return render_menu_item(request, template, context)
+
+
+def render_menu_posts(request, template='base/components/column_top_posts.html', num=5):
+    context = {}
+    all_posts = Post.objects
+    top_posts = all_posts.order_by('-counter')
+    context['posts'] = top_posts[:num]
+    return render_menu_item(request, template, context)
+
+
+def render_menu_months(request, template='base/components/column_months.html', num=5):
+    context = {}
+    all_posts = Post.objects
+    ordered_posts = all_posts.order_by('created_at')
+    dates_list = []
+    for post in ordered_posts:
+        month_date = post.created_at.strftime(r"%b-%Y")
+        if month_date not in dates_list:
+            dates_list.append(month_date)
+    context['months'] = dates_list[-num:]
+    return render_menu_item(request, template, context)
+
+
+def render_menu(items, separator='<br>'):
+    output = ''
+    for item in items:
+        output = output + item + separator
+    return output
+
 
 class PostListView(ListView):
     model = Post
@@ -27,29 +82,16 @@ class PostListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(PostListView, self).get_context_data(*args, **kwargs)
-        # posts
-        all_posts = Post.objects
 
-        ordered_posts = all_posts.order_by('created_at')
-        dates_list = []
-        for post in ordered_posts:
-            month_date = post.created_at.strftime(r"%b-%Y")
-            if month_date not in dates_list:
-                dates_list.append(month_date)
-        context['pub_months'] = dates_list
+        menu_item = [
+            render_menu_months(self.request),
+            render_menu_posts(self.request),
+            render_menu_authors(self.request),
+            render_menu_categories(self.request),
+            render_menu_tags(self.request),
+        ]
 
-        # top posts
-        top_posts = all_posts.order_by('-counter')
-        context['top_posts'] = top_posts[:5]
-
-        top_authors = Author.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
-        context['top_authors'] = top_authors[:5]
-
-        top_categories = Category.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
-        context['top_categories'] = top_categories[:5]
-
-        top_tags = Tag.objects.all().annotate(num_posts=Count('post')).order_by('-num_posts')
-        context['top_tags'] = top_tags[:5]
+        context['column'] = render_menu(menu_item)
 
         return context
 
