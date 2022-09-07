@@ -1,0 +1,20 @@
+<div class="post">
+    <h2 class="title"><a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></h2>
+    <p class="meta"><span class="date">{{ post.created_at|date }}</span>
+    <span class="posted">Posted by <a href="{% url 'author_detail' post.author.slug %}">{{ post.author.username }}</a></span></p>
+    <div style="clear: both;">&nbsp;</div>
+    <div class="entry">
+        <p class="links">
+            {% for category in post.categories.all %}
+                {{ category.name }}
+                <a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            {%  endfor %}
+        </p>
+        <p>{{ post.content }}</p>
+        <p class="links">
+            {% for tag in post.tags.all %}
+                <a href="{% url 'tag_detail' tag.slug %}">{{ tag.name }}</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+            {%  endfor %}
+        </p>
+    </div>
+</div>

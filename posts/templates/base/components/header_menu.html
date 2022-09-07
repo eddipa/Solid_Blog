@@ -1,6 +1,16 @@
+<div id="menu-wrapper">
+	<div id="menu">
+		<ul>
+			<li class="current_page_item"><a href="{% url 'post_list' %}">Homepage</a></li>
+            <li><a href="{% url 'category_list' %}">Category</a></li>
+            <li><a href="{% url 'tag_list' %}">Tag</a></li>
+            <li><a href="{% url 'author_list' %}">Author</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</div>
+	<!-- end #menu -->
+</div>
 <ul>
-  <li><a href="{% url 'post_list' %}">Home</a></li>
-  <li><a href="{% url 'category_list' %}">Category</a></li>
-  <li><a href="{% url 'tag_list' %}">Tag</a></li>
-  <li><a href="{% url 'author_list' %}">Author</a></li>
+
 </ul>

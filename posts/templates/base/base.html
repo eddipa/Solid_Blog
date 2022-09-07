@@ -1,33 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by TEMPLATED
+http://templated.co
+Released for free under the Creative Commons Attribution License
+
+Name       : Classifieds
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20120528
+
+-->
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>Blog Title</title>
-    <style>
-      fieldset {OVERFLOW-Y:scroll;}
-    </style>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Classifieds by TEMPLATED</title>
+<link href="{% static 'style.css' %}" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
-Blog Title and information
-<hr>
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% if user.is_staff %}
-        <a href="{% url 'admin:index' %}">control panel</a>
-    {% endif %}
-{% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a> |
-  <a href="{% url 'signup' %}">Sign Up</a>
-{% endif %}
-<hr>
 {% include 'base/components/header_menu.html' %}
-<hr>
-{% block content %}
-content
-{% endblock content%}
-<hr>
-footer
+{% include 'base/components/header.html' %}
+
+<div id="wrapper">
+	<div id="page">
+		{% block content%}
+		{% endblock content%}
+	</div>
+	<!-- end #page -->
+</div>
+{% include 'base/components/footer.html' %}
 </body>
 </html>
+<body>

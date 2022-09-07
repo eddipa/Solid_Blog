@@ -1,8 +1,10 @@
-Archive:<br>
-<ul>
-    {% for month in months %}
-      <li>
-        <a href="{% url 'post_month' month %}">{{ month }}</a>
-      </li>
-    {% endfor %}
-</ul>
+<li>
+    <h2>Archive</h2>
+    <ul>
+        {% for month in months %}
+          <li>
+            <a href="{% url 'post_month' month %}">{{ month }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+</li>

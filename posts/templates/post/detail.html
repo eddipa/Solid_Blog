@@ -1,45 +1,54 @@
 {% extends 'base/base.html' %}
 {% block content %}
-    title : {{ post.title }}
-    {% if user.is_authenticated %}
-        {% if post.state != post.STATES.PUBLISHED %}
-            [{{ post.state }}]
-        {% endif %}
-          &spar;<a href="{% url 'post_update' post.slug %}">Update</a>
-          &spar;<a href="{% url 'post_delete' post.slug %}">Delete</a>
-    {% endif %}
-    <br>
-    posted by : <a href="{% url 'author_detail' post.author.slug %}">{{ post.author.username }}</a><br>
-    categories :
-    {% for category in post.categories.all %}
-        <a href="{% url 'category_detail' category.slug %}">
-            {{ category.name }}
-        </a>&spar;
-    {%  endfor %}
-    <br>
-    {% if post.image %}
-        image: <img src="{{ post.image.url }}" /><br>
-    {% endif %}
-    content: {{ post.content }}<br>
-    posted at: {{ post.created_at|date }}<br>
-    last edit: {{ post.updated_at|date }}<br>
-    tags :
-    {% for tag in post.tags.all %}
-        <a href="{% url 'tag_detail' tag.slug %}">
-            {{ tag.name }}
-        </a>&spar;
-    {%  endfor %}
-    <hr>
-    views: {{ post.counter }}
+<div id="page-bgtop">
+	<div id="page-bgbtm">
+		<div id="content">
+			title : {{ post.title }}
+            {% if user.is_authenticated %}
+                {% if post.state != post.STATES.PUBLISHED %}
+                    [{{ post.state }}]
+                {% endif %}
+                  &spar;<a href="{% url 'post_update' post.slug %}">Update</a>
+                  &spar;<a href="{% url 'post_delete' post.slug %}">Delete</a>
+            {% endif %}
+            <br>
+            posted by : <a href="{% url 'author_detail' post.author.slug %}">{{ post.author.username }}</a><br>
+            categories :
+            {% for category in post.categories.all %}
+                <a href="{% url 'category_detail' category.slug %}">
+                    {{ category.name }}
+                </a>&spar;
+            {%  endfor %}
+            <br>
+            {% if post.image %}
+                image: <img src="{{ post.image.url }}" style="width: 200px"/><br>
+            {% endif %}
+            content: {{ post.content }}<br>
+            posted at: {{ post.created_at|date }}<br>
+            last edit: {{ post.updated_at|date }}<br>
+            tags :
+            {% for tag in post.tags.all %}
+                <a href="{% url 'tag_detail' tag.slug %}">
+                    {{ tag.name }}
+                </a>&spar;
+            {%  endfor %}
+            <hr>
+            views: {{ post.counter }}
 
-    {% if next_post %}
-        <hr>
-        next post:
-        <a href="{% url 'post_detail' next_post.pk %}">{{ next_post.title }}</a>
-        <br>
-    {% endif %}
-    {% if previous_post %}
-        previous post:
-        <a href="{% url 'post_detail' previous_post.pk %}">{{ previous_post.title }}</a>
-    {% endif %}
+            {% if next_post %}
+                <hr>
+                next post:
+                <a href="{% url 'post_detail' next_post.pk %}">{{ next_post.title }}</a>
+                <br>
+            {% endif %}
+            {% if previous_post %}
+                previous post:
+                <a href="{% url 'post_detail' previous_post.pk %}">{{ previous_post.title }}</a>
+            {% endif %}
+		</div>
+		<!-- end #content -->
+		{% include 'base/components/sidebar.html' %}
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+</div>
 {% endblock content %}

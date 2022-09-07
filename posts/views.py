@@ -1,15 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import HttpResponse, render
+
 from django.template import loader
 
 from django.urls import reverse_lazy
 from django.http import Http404
 from django.db.models import Count
 
-from datetime import datetime, timedelta
-from collections import OrderedDict
+from datetime import datetime
 
 from .models import Post, Tag, Category
 from accounts.models import CustomUser as Author
@@ -17,7 +16,7 @@ from accounts.models import CustomUser as Author
 from .forms import PostForm
 
 
-# TODO: separate of menu and columns loader from main views
+# TODO: separate of menu and columns loader from main views -> use template TAG
 
 def render_menu_item(request, template, context):
     t = loader.get_template(template)

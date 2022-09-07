@@ -1,18 +1,17 @@
 {% extends 'base/base.html' %}
 {% block content %}
-<a href="{% url 'post_create' %}">create new Post</a><br>
-<ul>
-    {% for post in posts %}
-      <li>
-        <a href="{% url 'post_detail' post.slug %}">
-            {{ post }}
-            {% if post.state != post.STATES.PUBLISHED %}
-                [{{ post.state }}]
-            {% endif %}
-        </a>
-      </li>
-    {% endfor %}
-</ul>
+<div id="page-bgtop">
+	<div id="page-bgbtm">
+		<div id="content">
+			{% for post in posts %}
+				{% include 'base/components/post_single.html' %}
+			{% endfor %}
+		</div>
+		<!-- end #content -->
+		{% include 'base/components/sidebar.html' %}
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+</div>
 {% if page_obj.paginator.num_pages > 1 %}
 <div class="pagination">
     <span class="step-links">
@@ -32,10 +31,4 @@
     </span>
 </div>
 {% endif %}
-
-
-
-<hr>
-{{ column|safe }}
-
 {% endblock content %}

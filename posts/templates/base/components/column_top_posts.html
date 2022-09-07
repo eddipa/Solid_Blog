@@ -1,8 +1,10 @@
-Top Post:<br>
-<ul>
-    {% for post in posts %}
-      <li>
-        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
-      </li>
-    {% endfor %}
-</ul>
+<li>
+    <h2>Top Posts</h2>
+    <ul>
+        {% for post in posts %}
+          <li>
+            <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+    </ul>
+</li>
