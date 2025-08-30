@@ -64,7 +64,6 @@ Solid_Blog/
   templates/         # create and add base.html, etc.
   manage.py
 ```
-
 ---
 
 ## Development notes
@@ -94,19 +93,6 @@ black --check .
 isort --check-only .
 ```
 
-Add a `.gitignore` if missing:
-```gitignore
-__pycache__/
-*.py[cod]
-db.sqlite3
-.env
-/media/
-staticfiles/
-.DS_Store
-.idea/
-.vscode/
-```
-
 ---
 
 ## Deployment (quick sketch)
@@ -115,15 +101,6 @@ staticfiles/
 - **Static**: run `collectstatic` during build.
 - **WSGI**: `gunicorn config.wsgi:application`.
 - **Reverse proxy**: ensure `X-Forwarded-Proto` so `SECURE_SSL_REDIRECT` behaves.
-
----
-
-## Roadmap
-
-- Rename `bloggg` → `blog` and standardize URLs to `/blog/<yyyy>/<mm>/<slug>/`.
-- Add RSS/Atom feed (`django.contrib.syndication`), sitemap, and meta tags.
-- Simple search + pagination with class-based views.
-- Optional: `django-taggit` for tags, `Pillow` for images, and an admin thumbnail.
 
 ---
 
